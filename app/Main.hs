@@ -6,7 +6,7 @@ import Lib
 main :: IO ()
 main = do
   inp <- getContents
-  putStr $ fromSql inp 
+  putStr $ toSql inp 
              
 
 
