@@ -1,10 +1,10 @@
-name:                soqsql
+name:                sosql
 version:             0.1.0.0
-github:              "githubuser/soqsql"
+github:              "rafonseca/SoSql"
 license:             BSD-3-Clause
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2024 Author name here"
+author:              "Renan Alves Fonseca"
+maintainer:          "renanfonseca@gmail.com"
+copyright:           "2024 Renan Alves Fonseca"
 
 extra-source-files:
 - README.md
@@ -17,10 +17,10 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/soqsql#readme>
+description:         Please see the README on GitHub at <https://github.com/githubuser/sosql#readme>
 
 dependencies:
-- base >= 4.7 && < 5
+- base
 - postgresql-syntax
 - text
 - headed-megaparsec
@@ -42,7 +42,7 @@ library:
   source-dirs: src
 
 executables:
-  soqsql-exe:
+  sosql:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -50,10 +50,10 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - soqsql
+    - sosql
 
 tests:
-  soqsql-test:
+  sosql-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -61,4 +61,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - soqsql
+    - sosql

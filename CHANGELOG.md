@@ -1,4 +1,4 @@
-# Changelog for `soqsql`
+# Changelog for `sosql`
 
 All notable changes to this project will be documented in this file.
 
