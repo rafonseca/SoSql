@@ -1,17 +1,17 @@
 # SoSql
 
-A SQL variation that allows for statements stacking. It is just syntax sugar for Common Table Expressions (the WITH clause).
+A SQL variation that allows for statements stacking. It is essentially syntax sugar for Common Table Expressions (the WITH clause).
 
 ## Why
 
-- SQL is an widely adopted standard. 
+- SQL is a widely adopted standard. 
 - We can only talk to PostgreSQL in SQL.
 - I wish there were a few modifications.
 
 
 ## How
 
-- While the SQL commitee does not approve my suggestions, we can transpile SoSql to SQL (and SQL to SoSql) using the binary provided here. 
+- While the SQL committee does not approve my suggestions, we can transpile SoSql to SQL (and SQL to SoSql) using the binary provided here. 
 
 ## What
 
@@ -61,9 +61,7 @@ so
   group by language
   fold [with] count(*);
 ```
-The select clause is inferred from GROUP BY and FOLD clauses
-
-### Implicit JOIN clause ?
+The select clause is inferred from GROUP BY and FOLD clauses.
 
 
 ## Installation instructions
@@ -73,6 +71,7 @@ By default, we use stack+nix. If you have both installed, the following command 
 stack install
 ```
 
-Installation without nix should work as well since we don't have external dependencies.
+Installation without Nix should also work since we don't have external dependencies.
 
-Alternatively, you can grab the binary in a zip file as an [artifact of github actions](https://github.com/rafonseca/SoSql/actions/workflows/haskell.yml). Pick the last succesful job, scroll down and you'll find the artifacts section.
+Alternatively, you can grab the binary in a zip file as an [artifact of GitHub actions](https://github.com/rafonseca/SoSql/actions/workflows/haskell.yml). Pick the last successful job, scroll down, and find the artifacts section.
+
