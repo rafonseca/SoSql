@@ -1,0 +1,30 @@
+name: Haskell CI
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-haskell@v1
+    - uses: cachix/install-nix-action@v27
+      with:
+        #ghc-version: '9.6.6'
+        #cabal-version: '3.2'
+        enable-stack: true
+        nix_path: nixpkgs=channel:nixpkgs-24.11-darwin
+        
+#    - name: Install dependencies
+#      run: |
+#        stack update
+    - name: Build
+      run: stack install 
