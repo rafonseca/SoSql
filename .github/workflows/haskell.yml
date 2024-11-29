@@ -1,0 +1,30 @@
+name: Haskell CI
+
+on:
+  push:
+    branches: [ "build" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-haskell@v1
+    - uses: cachix/install-nix-action@v27
+      with:
+        enable-stack: true
+        nix_path: nixpkgs=channel:nixpkgs-24.11-darwin
+        
+    - name: Build
+      run: stack install
+      
+    - uses: actions/upload-artifact@v4
+      with:
+        name: sosql binary
+        path: /home/runner/.local/bin/sosql

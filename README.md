@@ -68,4 +68,11 @@ The select clause is inferred from GROUP BY and FOLD clauses
 
 ## Installation instructions
 
-[WIP]
+By default, we use stack+nix. If you have both installed, the following command will create a binary called `sosql` in the appropriate path.
+```
+stack install
+```
+
+Installation without nix should work as well since we don't have external dependencies.
+
+Alternatively, you can grab the binary in a zip file as an [artifact of github actions](https://github.com/rafonseca/SoSql/actions/workflows/haskell.yml). Pick the last succesful job, scroll down and you'll find the artifacts section.
