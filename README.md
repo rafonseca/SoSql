@@ -75,3 +75,12 @@ Installation without Nix should also work since we don't have external dependenc
 
 Alternatively, you can grab the binary in a zip file as an [artifact of GitHub actions](https://github.com/rafonseca/SoSql/actions/workflows/haskell.yml). Pick the last successful job, scroll down, and find the artifacts section.
 
+## TODO
+  * [x] sosql -> sql
+  * [ ] sql -> sosql
+  * [x] implicit from clause 
+  * [x] named statements 
+  * [ ] unnamed statements
+  * [ ] implicit select clause
+  * [ ] improved aggregate clause
+
