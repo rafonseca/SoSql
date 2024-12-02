@@ -1,8 +1,10 @@
+{-# OPTIONS_GHC -Werror=missing-fields #-}
 module Lib
     ( fromSql,
       toSql
     ) where
 
+import Prelude
 import PostgresqlSyntax.Parsing(run, preparableStmt)
 import PostgresqlSyntax.Ast
 import Ast
@@ -52,11 +54,15 @@ transformSoClause :: SoClause -> PreparableStmt
 transformSoClause soClause = let
   SoClause ctes = soClause
   (newCtes,lastName) =  fillEmptyFromClauses ctes
-  with = WithClause False newCtes
   asterisk = NormalTargeting (AsteriskTargetEl :| [])
   from = RelationExprTableRef (SimpleRelationExpr (SimpleQualifiedName lastName) False) Nothing Nothing
-  simpleselect = NormalSimpleSelect (Just asterisk) Nothing (Just (from:|[])) Nothing Nothing Nothing Nothing
-  select = SelectNoParens (Just with) (Left simpleselect) Nothing Nothing Nothing
+  simpleselect = NormalSimpleSelect
+    { selectList = Just asterisk, from = Just (from:|[])
+    , into = Nothing,  where'= Nothing, group= Nothing, having= Nothing, window = Nothing}
+  select = SelectNoParens
+    { with = Just WithClause{recursive=False, ctes=newCtes}
+    , select = Left simpleselect
+    , sort = Nothing, limit = Nothing, locking = Nothing}
   in SelectPreparableStmt (Left select)
 
 
