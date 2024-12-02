@@ -9,6 +9,7 @@ import Ast
 import qualified Parsing
 import qualified PostgresqlSyntax.Rendering as Rendering
 import Data.Text(Text,unpack,pack) 
+import Data.Maybe
 import Data.List.NonEmpty(NonEmpty((:|)),toList,fromList)
 
 
@@ -59,15 +60,20 @@ transformSoClause soClause = let
   in SelectPreparableStmt (Left select)
 
 
-fillEmptyFromClauses ::  NonEmpty CommonTableExpr -> (NonEmpty CommonTableExpr,Ident)
+fillEmptyFromClauses ::  NonEmpty CommonTableExpr' -> (NonEmpty CommonTableExpr,Ident)
 fillEmptyFromClauses cteExprs = let
-  ctesList = toList cteExprs
-  names = [name |CommonTableExpr name _ _ _ <- ctesList]
+  ctesList' = toList cteExprs
+  explicitNames = [name |CommonTableExpr' name _ _ _ <- ctesList']
+  defaultNames = [UnquotedIdent  (pack ("_t" <> show n)) | n<- [1..]]
+  names = zipWith fromMaybe defaultNames explicitNames
+  ctesList = zipWith toCommonTableExpr ctesList' names
   firstCte:subsequentCtes = ctesList
   modifiedCtes = zipWith replaceIdentInSelect names subsequentCtes
   in
   (fromList (firstCte:modifiedCtes),last names)
 
+toCommonTableExpr :: CommonTableExpr'-> Ident -> CommonTableExpr
+toCommonTableExpr (CommonTableExpr' _ b c d) name = CommonTableExpr name b c d
 
 replaceIdentInSelect :: Ident -> CommonTableExpr -> CommonTableExpr   
 replaceIdentInSelect newIdent (CommonTableExpr a b c (SelectPreparableStmt stmt)) = let

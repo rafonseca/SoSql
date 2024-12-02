@@ -8,14 +8,12 @@ import PostgresqlSyntax.Parsing
 import Ast
 import Data.List.NonEmpty
 
---import Control.Applicative.Combinators (many,optional)
 import Control.Applicative.Combinators hiding (some)
 import Text.Megaparsec (Stream)
 import qualified Text.Megaparsec as Megaparsec
 import qualified Text.Megaparsec.Char as MegaparsecChar
 
 import Data.Text(pack)
-import PostgresqlSyntax.Ast(CommonTableExpr(..))
 
 
 -- sep1, space1, space were extracted from hidden PostgresqlSyntax.Extras.HeadedMegaparsec
@@ -40,21 +38,21 @@ string :: (Ord err, Stream strm) => Megaparsec.Tokens strm -> HeadedParsec err s
 string = parse . MegaparsecChar.string
 
 
-commonTableExpr' = label "sosql cte" $ (do
-  name <- ident
-  space
-  string ":<"
-  space
-  stmt <- preparableStmt
-  return (CommonTableExpr name Nothing Nothing stmt)) <|>
-                   do
-                     stmt <- preparableStmt
-                     space
-                     string ":>"
-                     space
-                     name <- ident
-                     return (CommonTableExpr name Nothing Nothing stmt)
 
+commonTableExpr' = label "sosql cte" $ named_cte <|> unnamed_cte
+  where
+    named_cte = do
+      name <- ident
+      space
+      string "<-"
+      space
+      stmt <- preparableStmt
+      return (CommonTableExpr' (Just name) Nothing Nothing stmt)
+
+    unnamed_cte = do
+      space
+      stmt <- preparableStmt
+      return (CommonTableExpr' Nothing Nothing Nothing stmt)      
 
 
 soClause :: Parser SoClause

@@ -80,7 +80,7 @@ Alternatively, you can grab the binary in a zip file as an [artifact of GitHub a
   * [ ] sql -> sosql
   * [x] implicit from clause 
   * [x] named statements 
-  * [ ] unnamed statements
+  * [x] unnamed statements
   * [ ] implicit select clause
   * [ ] improved aggregate clause
-
+  * [ ] implicit returning clause
