@@ -1,0 +1,3 @@
+[submodule "postgresql-syntax"]
+	path = postgresql-syntax
+	url = git@github.com:rafonseca/postgresql-syntax.git

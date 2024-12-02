@@ -3,6 +3,8 @@
 module Ast (SoClause(..),TargetEl(..),CommonTableExpr'(..))
   where
 
+import Prelude
+
 import PostgresqlSyntax.Ast
 import Data.List.NonEmpty
 import GHC.Generics (Generic)
