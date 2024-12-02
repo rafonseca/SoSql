@@ -5,7 +5,7 @@ module Lib
 
 import PostgresqlSyntax.Parsing(run, preparableStmt)
 import PostgresqlSyntax.Ast
-import qualified Ast
+import Ast
 import qualified Parsing
 import qualified PostgresqlSyntax.Rendering as Rendering
 import Data.Text(Text,unpack,pack) 
@@ -35,10 +35,10 @@ toSql = withText toSql'
     toSql' :: Text ->  Text
     toSql' = render . transformSoSql . parseSoSql
     
-    parseSoSql :: Text -> Either String Ast.SoClause
+    parseSoSql :: Text -> Either String SoClause
     parseSoSql = run Parsing.soClause
 
-    transformSoSql :: Either String Ast.SoClause -> Either String PreparableStmt
+    transformSoSql :: Either String SoClause -> Either String PreparableStmt
     transformSoSql = fmap transformSoClause
 
 -- Core logic
@@ -47,9 +47,9 @@ render (Left msg) = pack msg
 render (Right ast) = Rendering.toText $ Rendering.preparableStmt  ast
 
 
-transformSoClause :: Ast.SoClause -> PreparableStmt
+transformSoClause :: SoClause -> PreparableStmt
 transformSoClause soClause = let
-  Ast.SoClause ctes = soClause
+  SoClause ctes = soClause
   (newCtes,lastName) =  fillEmptyFromClauses ctes
   with = WithClause False newCtes
   asterisk = NormalTargeting (AsteriskTargetEl :| [])
