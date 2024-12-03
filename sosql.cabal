@@ -38,6 +38,8 @@ library
   build-depends:
       base
     , headed-megaparsec
+    , hspec
+    , hspec-golden
     , megaparsec
     , parser-combinators
     , postgresql-syntax
@@ -56,6 +58,8 @@ executable sosql
   build-depends:
       base
     , headed-megaparsec
+    , hspec
+    , hspec-golden
     , megaparsec
     , parser-combinators
     , postgresql-syntax
@@ -76,6 +80,8 @@ test-suite sosql-test
   build-depends:
       base
     , headed-megaparsec
+    , hspec
+    , hspec-golden
     , megaparsec
     , parser-combinators
     , postgresql-syntax

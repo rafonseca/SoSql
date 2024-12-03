@@ -26,7 +26,8 @@ dependencies:
 - headed-megaparsec
 - megaparsec
 - parser-combinators
-  
+- hspec-golden
+- hspec  
 ghc-options:
 - -Wall
 - -Wcompat

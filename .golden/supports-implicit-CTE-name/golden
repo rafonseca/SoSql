@@ -1,0 +1,1 @@
+WITH _t1 AS (SELECT 1) SELECT * FROM _t1
